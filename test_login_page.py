@@ -2,14 +2,14 @@ from .pages.login_page import LoginPage
 from .pages.artists_page import ArtistsPage
 
 
-def test_user_should_see_login_form_on_login_page(driver):
+def test_admin_user_should_see_login_form_on_login_page(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
     page.should_be_login_page()
 
 
-def test_user_can_login_and_go_to_artists_page(driver):
+def test_admin_user_is_navigated_to_artists_page_after_login(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()

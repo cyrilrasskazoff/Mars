@@ -3,7 +3,6 @@ from .locators import ArtistsPageLocators
 
 
 class ArtistsPage(BasePage):
-
     def should_be_artists_page(self):
         self.should_be_artists_page_title()
         self.should_be_artists_url()
