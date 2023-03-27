@@ -25,18 +25,16 @@ class SidebarLocators:
 
 
 class UsersPageLocators:
-    email = "biom@dispostable.com"
-    name = "Biom"
     USERS_PAGE_TITLE = (By.XPATH, '//h1[text()="Users"]')
     ACCOUNT_TYPE_FILTER = (By.ID, 'mui-component-select-AccountType')
     ACCOUNT_TYPE_FILTER_INDIVIDUAL = (By.CSS_SELECTOR, "[data-value = 'individual']")
-    INDIVIDUAL_FILTER_RESULTS = (By.CSS_SELECTOR, "[title = 'Individual']")
     ACCOUNT_TYPE_FILTER_ENTITY = (By.CSS_SELECTOR, "[data-value = 'entity']")
-    ENTITY_FILTER_RESULTS = (By.CSS_SELECTOR, "[title = 'Entity']")
+    ACC_TYPE_FILTER_RESULTS = (By.CSS_SELECTOR, '[data-field="accountType"]')
     EMAIL_OR_NAME_FILTER_INPUT = (By.NAME, "EmailOrName")
-    EMAIL_FILTER_RESULTS = (By.CSS_SELECTOR, f'[title = "{email}"]')
-    EMAIL_FILTER_RESULT = (By.CSS_SELECTOR, f'[title = "{email}"]')
-    NAME_FILTER_RESULTS = (By.XPATH, f"//a[contains(text(), '{name}')]")
+    EMAIL_FILTER_RESULTS = (By.CSS_SELECTOR, '[data-field="email"]')
+    # EMAIL_FILTER_RESULT = (By.CSS_SELECTOR, f'[title = "{email}"]')
+    NAME_FILTER_RESULTS = (By.CSS_SELECTOR, '[data-field="name"]')
+    TABLE_DATA = (By.CLASS_NAME, 'MuiDataGrid-cell')
 
 
 class UserDetailsPageLocators:
