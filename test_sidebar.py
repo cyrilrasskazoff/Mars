@@ -7,7 +7,8 @@ from .pages.account_settings import AccountSettingsPage
 from .pages.login_page import LoginPage
 from .pages.artists_page import ArtistsPage
 
-def test_user_should_see_sidebar_menu_after_login(driver):
+
+def test_admin_user_should_see_sidebar_menu_after_login(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -16,7 +17,7 @@ def test_user_should_see_sidebar_menu_after_login(driver):
     page.should_be_sidebar_menu()
 
 
-def test_onclick_users_link_redirects_to_users_page(driver):
+def test_admin_user_is_navigated_to_users_page_after_clicking_on_users_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -27,7 +28,7 @@ def test_onclick_users_link_redirects_to_users_page(driver):
     users_page.should_be_users_page()
 
 
-def test_onclick_news_link_redirects_to_news_page(driver):
+def test_admin_user_is_navigated_to_news_page_after_clicking_on_news_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -38,7 +39,7 @@ def test_onclick_news_link_redirects_to_news_page(driver):
     news_page.should_be_news_page()
 
 
-def test_onclick_artists_link_redirects_to_artists_page(driver):
+def test_admin_user_is_navigated_to_artists_page_after_clicking_on_artists_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -49,7 +50,7 @@ def test_onclick_artists_link_redirects_to_artists_page(driver):
     artists_page.should_be_artists_page()
 
 
-def test_onclick_featured_sections_link_redirects_to_featured_sections_page(driver):
+def test_admin_user_is_navigated_to_featured_sections_page_after_clicking_on_featured_sections_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -60,7 +61,7 @@ def test_onclick_featured_sections_link_redirects_to_featured_sections_page(driv
     f_sections_page.should_be_featured_sections_page()
 
 
-def test_onclick_logo_link_redirects_to_artists_page(driver):
+def test_admin_user_is_navigated_to_artists_page_after_clicking_on_logo_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -71,7 +72,7 @@ def test_onclick_logo_link_redirects_to_artists_page(driver):
     artists_page.should_be_artists_page()
 
 
-def test_onclick_admin_users_link_redirects_to_admin_user_page(driver):
+def test_admin_user_is_navigated_to_admin_user_page_after_clicking_on_admin_users_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -82,7 +83,7 @@ def test_onclick_admin_users_link_redirects_to_admin_user_page(driver):
     admin_users_page.should_be_admin_users_page()
 
 
-def test_onclick_account_settings_link_redirects_to_account_settings_page(driver):
+def test_admin_user_is_navigated_to_account_settings_page_after_clicking_on_account_settings_link(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
@@ -93,7 +94,7 @@ def test_onclick_account_settings_link_redirects_to_account_settings_page(driver
     acc_settings_page.should_be_account_settings_page()
 
 
-def test_onclick_logout_redirects_user_to_login_page(driver):
+def test_admin_user_is_navigated_to_login_page_after_clicking_on_logout_btn(driver):
     url = "https://stage.mars.solbeg.com/admin"
     page = LoginPage(driver, url)
     page.open()
