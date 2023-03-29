@@ -35,6 +35,16 @@ class UsersPageLocators:
     # EMAIL_FILTER_RESULT = (By.CSS_SELECTOR, f'[title = "{email}"]')
     NAME_FILTER_RESULTS = (By.CSS_SELECTOR, '[data-field="name"]')
     TABLE_DATA = (By.CLASS_NAME, 'MuiDataGrid-cell')
+    DATE_PICKER = (By.CSS_SELECTOR, '[placeholder="Account Created"]')
+    FILTER_BY_YEAR = (By.CSS_SELECTOR, '[data-testid="ArrowDropDownIcon"]')
+    YEAR_OPTIONS = (By.CLASS_NAME, 'PrivatePickersYear-yearButton')
+    YEAR_OPTION = (By.CLASS_NAME, 'PrivatePickersYear-yearButton')
+    MONTH_OPTION = (By.CLASS_NAME, 'MuiPickersCalendarHeader-label')
+    NEXT_MONTH_BTN = (By.CSS_SELECTOR, '[title="Next month"]')
+    DAY_OPTIONS = (By.XPATH, '//html/body/div[2]/div[2]/div/div/div/div[2]/div/div/div[2]/div/div/button')
+    DAY_OPTION = (By.XPATH, '//html/body/div[2]/div[2]/div/div/div/div[2]/div/div/div[2]/div/div/button')
+    DATE_FILTER_RESULTS = (By.CSS_SELECTOR, '[data-field="createdAt"]')
+    DATE_FILTER_RESULT = (By.CSS_SELECTOR, '[data-field="createdAt"]')
 
 
 class UserDetailsPageLocators:
