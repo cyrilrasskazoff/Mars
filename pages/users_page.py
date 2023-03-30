@@ -75,8 +75,6 @@ class UsersPage(BasePage):
         try:
             year_options = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_all_elements_located(UsersPageLocators.YEAR_OPTIONS))
-            year_option = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(UsersPageLocators.YEAR_OPTION))
             for year_option in year_options:
                 if year_option.text == start_year:
                     year_option.click()
@@ -94,8 +92,6 @@ class UsersPage(BasePage):
         try:
             day_options = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(
                 UsersPageLocators.DAY_OPTIONS))
-            day_option = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
-                UsersPageLocators.DAY_OPTION))
             for day_option in day_options:
                 if day_option.text == end_day:
                     day_option.click()
@@ -104,10 +100,54 @@ class UsersPage(BasePage):
 
         date_filter_results = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_all_elements_located(UsersPageLocators.DATE_FILTER_RESULTS))
-        date_filter_result = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(UsersPageLocators.DATE_FILTER_RESULT))
         for date_filter_result in date_filter_results[1:]:
             assert date_filter_result.text[0:2] == '09' or date_filter_result.text[0:2] == '10' \
                    and date_filter_result.text[6:] == '2022', 'Filter by account creation date failed'
+
+    def should_filter_by_active_inactive_work(self):
+        active_filter = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(UsersPageLocators.ACTIVE_FILTER))
+        active_filter.click()
+        filter_results = WebDriverWait(self.driver, 10).until((EC.visibility_of_all_elements_located(UsersPageLocators.
+                                                                                                     TABLE_DATA)))
+        active_filter_results = []
+        for result in filter_results:
+            active_filter_results.append(result.text)
+        inactive_filter = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(UsersPageLocators.INACTIVE_FILTER))
+        inactive_filter.click()
+        filter_results = WebDriverWait(self.driver, 10).until((EC.visibility_of_all_elements_located(UsersPageLocators.
+                                                                                                     TABLE_DATA)))
+        inactive_filter_results = []
+        for result in filter_results:
+            inactive_filter_results.append(result.text)
+        assert active_filter_results != inactive_filter_results, 'Filter by Active/Inactive account type failed'
+
+    def should_pagination_work(self):
+        try:
+            next_page_button = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(UsersPageLocators.NEXT_PAGE_BTN))
+            btn_disabled = next_page_button.get_attribute("disabled")
+            if btn_disabled == "true":
+                print('There is only one page')
+            else:
+                while btn_disabled is None:
+                    page_data = WebDriverWait(self.driver, 10).until(
+                        EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
+                    page_results = []
+                    for data in page_data:
+                        page_results.append(data.text)
+                    next_page_button.click()
+                    try:
+                        page_data = WebDriverWait(self.driver, 10).until(
+                            EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
+                        new_page_results = []
+                        for data in page_data:
+                            new_page_results.append(data.text)
+
+                        assert page_results != new_page_results, 'Pagination test failed'
+                    except selenium.common.StaleElementReferenceException:
+                        pass
+        except selenium.common.ElementClickInterceptedException:
+            pass
 
 

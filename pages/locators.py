@@ -38,13 +38,14 @@ class UsersPageLocators:
     DATE_PICKER = (By.CSS_SELECTOR, '[placeholder="Account Created"]')
     FILTER_BY_YEAR = (By.CSS_SELECTOR, '[data-testid="ArrowDropDownIcon"]')
     YEAR_OPTIONS = (By.CLASS_NAME, 'PrivatePickersYear-yearButton')
-    YEAR_OPTION = (By.CLASS_NAME, 'PrivatePickersYear-yearButton')
     MONTH_OPTION = (By.CLASS_NAME, 'MuiPickersCalendarHeader-label')
     NEXT_MONTH_BTN = (By.CSS_SELECTOR, '[title="Next month"]')
     DAY_OPTIONS = (By.XPATH, '//html/body/div[2]/div[2]/div/div/div/div[2]/div/div/div[2]/div/div/button')
-    DAY_OPTION = (By.XPATH, '//html/body/div[2]/div[2]/div/div/div/div[2]/div/div/div[2]/div/div/button')
     DATE_FILTER_RESULTS = (By.CSS_SELECTOR, '[data-field="createdAt"]')
-    DATE_FILTER_RESULT = (By.CSS_SELECTOR, '[data-field="createdAt"]')
+    ACTIVE_FILTER = (By.XPATH, '//button[text()="Active"]')
+    INACTIVE_FILTER = (By.XPATH, '//button[text()="Inactive"]')
+    NEXT_PAGE_BTN = (By.CSS_SELECTOR, '[aria-label="Go to next page"]')
+
 
 
 class UserDetailsPageLocators:
