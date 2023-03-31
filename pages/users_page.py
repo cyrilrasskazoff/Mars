@@ -150,4 +150,38 @@ class UsersPage(BasePage):
         except selenium.common.ElementClickInterceptedException:
             pass
 
+    def should_clear_button_work(self):
+        default_data = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
+        default_table_results = []
+        for data in default_data:
+            default_table_results.append(data.text)
+        account_type_filter = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(UsersPageLocators.ACCOUNT_TYPE_FILTER))
+        account_type_filter.click()
+        individual_account_option = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(UsersPageLocators.ACCOUNT_TYPE_FILTER_INDIVIDUAL))
+        individual_account_option.click()
+        try:
+            ind_filter_data = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
+            ind_filter_results = []
+            for data in ind_filter_data:
+                ind_filter_results.append(data.text)
+        except selenium.common.StaleElementReferenceException:
+            pass
+        try:
+            clear_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(UsersPageLocators.CLEAR_BUTTON))
+            clear_btn.click()
+            time.sleep(2)
+            clear_data = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
+            clear_table_results = []
+            for data in clear_data:
+                clear_table_results.append(data.text)
+        except selenium.common.StaleElementReferenceException:
+            pass
+        assert default_table_results == clear_table_results, 'Clear button functionality failed'
+
 

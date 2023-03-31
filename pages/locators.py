@@ -45,6 +45,7 @@ class UsersPageLocators:
     ACTIVE_FILTER = (By.XPATH, '//button[text()="Active"]')
     INACTIVE_FILTER = (By.XPATH, '//button[text()="Inactive"]')
     NEXT_PAGE_BTN = (By.CSS_SELECTOR, '[aria-label="Go to next page"]')
+    CLEAR_BUTTON = (By.XPATH, '//button[text()="Clear"]')
 
 
 

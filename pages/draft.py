@@ -107,31 +107,61 @@ driver.find_element(By.XPATH, '//span[text()= "Users"]').click()
 #     inactive_filter_results.append(filter_result.text)
 # assert active_filter_results != inactive_filter_results, 'Active/inactive filter failed'
 
-try:
-    pgn_next_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Go to next page"]')))
-    btn_disabled = pgn_next_btn.get_attribute("disabled")
-    if btn_disabled == "true":
-        print('There is only one page')
-    else:
-        while btn_disabled is None:
-            page_data = WebDriverWait(driver, 10).until(
-                EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
-            page_results = []
-            for data in page_data:
-                page_results.append(data.text)
-            pgn_next_btn.click()
-            try:
-                page_data = WebDriverWait(driver, 10).until(
-                    EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
-                new_page_results = []
-                for data in page_data:
-                    new_page_results.append(data.text)
 
-                assert page_results != new_page_results, 'Pagination test failed'
-            except selenium.common.StaleElementReferenceException:
-                pass
-except selenium.common.ElementClickInterceptedException:
+#*********
+# pagination test
+# try:
+#     pgn_next_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[aria-label="Go to next page"]')))
+#     btn_disabled = pgn_next_btn.get_attribute("disabled")
+#     if btn_disabled == "true":
+#         print('There is only one page')
+#     else:
+#         while btn_disabled is None:
+#             page_data = WebDriverWait(driver, 10).until(
+#                 EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+#             page_results = []
+#             for data in page_data:
+#                 page_results.append(data.text)
+#             pgn_next_btn.click()
+#             try:
+#                 page_data = WebDriverWait(driver, 10).until(
+#                     EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+#                 new_page_results = []
+#                 for data in page_data:
+#                     new_page_results.append(data.text)
+#
+#                 assert page_results != new_page_results, 'Pagination test failed'
+#             except selenium.common.StaleElementReferenceException:
+#                 pass
+# except selenium.common.ElementClickInterceptedException:
+#     pass
+# test_clear_btn_after_filter_by_name
+default_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+default_table_results = []
+for data in default_data:
+    default_table_results.append(data.text)
+account_type_filter = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mui-component-select-AccountType')))
+account_type_filter.click()
+individual_account_option = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-value = 'individual']")))
+individual_account_option.click()
+try:
+    ind_filter_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+    ind_filter_results = []
+    for data in ind_filter_data:
+        ind_filter_results.append(data.text)
+except selenium.common.StaleElementReferenceException:
     pass
+try:
+    clear_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[text()="Clear"]')))
+    clear_btn.click()
+    time.sleep(3)
+    clear_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+    clear_table_results = []
+    for data in clear_data:
+        clear_table_results.append(data.text)
+except selenium.common.StaleElementReferenceException:
+    pass
+assert ind_filter_results != default_table_results and default_table_results == clear_table_results, 'Clear button functionality failed'
 
 
 

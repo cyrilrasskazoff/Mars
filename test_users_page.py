@@ -70,8 +70,8 @@ url = "https://stage.mars.solbeg.com/admin"
 #     users_page.should_navigate_user_to_user_details_page()
 #     user_details_page = UserDetailsPage(driver, url)
 #     user_details_page.should_be_user_details_page()
-
-
+#
+#
 # def test_filter_by_account_creation_date_should_work(driver):
 #     page = LoginPage(driver, url)
 #     page.open()
@@ -81,8 +81,8 @@ url = "https://stage.mars.solbeg.com/admin"
 #     users_page = UsersPage(driver, url)
 #     users_page.should_be_users_page()
 #     users_page.should_filter_by_acc_creation_date_work()
-
-
+#
+#
 # def test_filter_by_active_inactive_acc_type_should_work(driver):
 #     page = LoginPage(driver, url)
 #     page.open()
@@ -94,7 +94,18 @@ url = "https://stage.mars.solbeg.com/admin"
 #     users_page.should_filter_by_active_inactive_work()
 
 
-def test_pagination_on_users_page_should_work(driver):
+# def test_pagination_on_users_page_should_work(driver):
+#     page = LoginPage(driver, url)
+#     page.open()
+#     page.login_admin_and_navigate_to_artists_page()
+#     page = Sidebar(driver, url)
+#     page.users_link_navigates_to_users_page()
+#     users_page = UsersPage(driver, url)
+#     users_page.should_be_users_page()
+#     users_page.should_pagination_work()
+
+
+def test_clear_button_should_clear_applied_filters_and_display_default_page_data(driver):
     page = LoginPage(driver, url)
     page.open()
     page.login_admin_and_navigate_to_artists_page()
@@ -102,5 +113,4 @@ def test_pagination_on_users_page_should_work(driver):
     page.users_link_navigates_to_users_page()
     users_page = UsersPage(driver, url)
     users_page.should_be_users_page()
-    users_page.should_pagination_work()
-
+    users_page.should_clear_button_work()
