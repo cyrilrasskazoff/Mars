@@ -136,33 +136,45 @@ driver.find_element(By.XPATH, '//span[text()= "Users"]').click()
 # except selenium.common.ElementClickInterceptedException:
 #     pass
 # test_clear_btn_after_filter_by_name
-default_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
-default_table_results = []
-for data in default_data:
-    default_table_results.append(data.text)
-account_type_filter = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mui-component-select-AccountType')))
-account_type_filter.click()
-individual_account_option = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-value = 'individual']")))
-individual_account_option.click()
-try:
-    ind_filter_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
-    ind_filter_results = []
-    for data in ind_filter_data:
-        ind_filter_results.append(data.text)
-except selenium.common.StaleElementReferenceException:
-    pass
-try:
-    clear_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[text()="Clear"]')))
-    clear_btn.click()
-    time.sleep(3)
-    clear_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
-    clear_table_results = []
-    for data in clear_data:
-        clear_table_results.append(data.text)
-except selenium.common.StaleElementReferenceException:
-    pass
-assert ind_filter_results != default_table_results and default_table_results == clear_table_results, 'Clear button functionality failed'
+# default_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+# default_table_results = []
+# for data in default_data:
+#     default_table_results.append(data.text)
+# account_type_filter = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mui-component-select-AccountType')))
+# account_type_filter.click()
+# individual_account_option = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-value = 'individual']")))
+# individual_account_option.click()
+# try:
+#     ind_filter_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+#     ind_filter_results = []
+#     for data in ind_filter_data:
+#         ind_filter_results.append(data.text)
+# except selenium.common.StaleElementReferenceException:
+#     pass
+# try:
+#     clear_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[text()="Clear"]')))
+#     clear_btn.click()
+#     time.sleep(3)
+#     clear_data = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'MuiDataGrid-cell')))
+#     clear_table_results = []
+#     for data in clear_data:
+#         clear_table_results.append(data.text)
+# except selenium.common.StaleElementReferenceException:
+#     pass
+# assert ind_filter_results != default_table_results and default_table_results == clear_table_results, 'Clear button functionality failed'
 
-
-
+def should_navigate_user_to_user_details_page(self):
+    email = "biom@dispostable.com"
+    self.driver.find_element(By.NAME, "EmailOrName").send_keys(email)
+    self.driver.find_element(By.NAME, "EmailOrName").send_keys(Keys.RETURN)
+    # time.sleep(3)
+    # for element in self.driver.find_elements(*UsersPageLocators.EMAIL_FILTER_RESULTS)[1:]:
+    #     element.click()
+    data = WebDriverWait(self.driver, 10).until(
+        EC.presence_of_all_elements_located((*By.CLASS_NAME, 'MuiDataGrid-cell')))
+    user = WebDriverWait(self.driver, 10).until(
+        EC.element_to_be_clickable((*By.CLASS_NAME, 'MuiDataGrid-cell')))
+    print(len(data), user.text)
+    # as it displays data for 1 user only
+    user.click()
 driver.quit()

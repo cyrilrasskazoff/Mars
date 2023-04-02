@@ -21,16 +21,16 @@ class UsersPage(BasePage):
     def should_filter_by_individual_account_type_work(self):
         account_type_filter = self.driver.find_element(*UsersPageLocators.ACCOUNT_TYPE_FILTER).click()
         individual_account_option = self.driver.find_element(*UsersPageLocators.ACCOUNT_TYPE_FILTER_INDIVIDUAL).click()
-        time.sleep(3)
-        ind_filter_results = self.driver.find_elements(*UsersPageLocators.ACC_TYPE_FILTER_RESULTS)
+        ind_filter_results = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_all_elements_located(UsersPageLocators.ACC_TYPE_FILTER_RESULTS))
         for result in ind_filter_results[1:]:
             assert result.text == 'Individual' and result.text != 'Entity', "Individual Filter failed"
 
     def should_filter_by_entity_account_type_work(self):
         account_type_filter = self.driver.find_element(*UsersPageLocators.ACCOUNT_TYPE_FILTER).click()
         entity_account_option = self.driver.find_element(*UsersPageLocators.ACCOUNT_TYPE_FILTER_ENTITY).click()
-        time.sleep(3)
-        entity_filter_results = self.driver.find_elements(*UsersPageLocators.ACC_TYPE_FILTER_RESULTS)
+        entity_filter_results = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_all_elements_located(UsersPageLocators.ACC_TYPE_FILTER_RESULTS))
         for result in entity_filter_results[1:]:
             assert result.text == 'Entity' and result.text != 'Individual', "Entity Filter failed"
 
@@ -38,8 +38,8 @@ class UsersPage(BasePage):
         email = "biom@dispostable.com"
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(email)
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(Keys.RETURN)
-        time.sleep(3)
-        email_filter_results = self.driver.find_elements(*UsersPageLocators.EMAIL_FILTER_RESULTS)
+        email_filter_results = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_all_elements_located(UsersPageLocators.EMAIL_FILTER_RESULTS))
         for result in email_filter_results[1:]:
             assert result.text == email, "Filter by Email failed"
 
@@ -47,8 +47,8 @@ class UsersPage(BasePage):
         name = "Biom"
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(name)
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(Keys.RETURN)
-        time.sleep(3)
-        name_filter_results = self.driver.find_elements(*UsersPageLocators.NAME_FILTER_RESULTS)
+        name_filter_results = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_all_elements_located(UsersPageLocators.NAME_FILTER_RESULTS))
         for result in name_filter_results[1:]:
             assert name in result.text, "Filter by Name failed"
 
@@ -56,12 +56,17 @@ class UsersPage(BasePage):
         email = "biom@dispostable.com"
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(email)
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(Keys.RETURN)
-        time.sleep(3)
-        for element in self.driver.find_elements(*UsersPageLocators.EMAIL_FILTER_RESULTS)[1:]:
-            element.click()
+        # time.sleep(3)
+        # for element in self.driver.find_elements(*UsersPageLocators.EMAIL_FILTER_RESULTS)[1:]:
+        #     element.click()
+        data = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
+        user = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(UsersPageLocators.TABLE_DATA))
+        user.click()
 
     def should_filter_by_acc_creation_date_work(self):
-        # Notice syntax difference when using WebDriverWait and EC (no '*'):
+        # Note syntax difference when using WebDriverWait and EC (no '*'):
         # date_picker = self.driver.find_element(*UsersPageLocators.DATE_PICKER)
         # date_picker = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(UsersPageLocators.DATE_PICKER))
         start_year = '2022' # picking hte start year = 2022 will automatically pick the start date = 09/01/2022
@@ -107,8 +112,8 @@ class UsersPage(BasePage):
     def should_filter_by_active_inactive_work(self):
         active_filter = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(UsersPageLocators.ACTIVE_FILTER))
         active_filter.click()
-        filter_results = WebDriverWait(self.driver, 10).until((EC.visibility_of_all_elements_located(UsersPageLocators.
-                                                                                                     TABLE_DATA)))
+        filter_results = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(UsersPageLocators.
+                                                                                                     TABLE_DATA))
         active_filter_results = []
         for result in filter_results:
             active_filter_results.append(result.text)
@@ -170,11 +175,11 @@ class UsersPage(BasePage):
                 ind_filter_results.append(data.text)
         except selenium.common.StaleElementReferenceException:
             pass
+        clear_btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(UsersPageLocators.CLEAR_BUTTON))
+        clear_btn.click()
+        time.sleep(1)
         try:
-            clear_btn = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(UsersPageLocators.CLEAR_BUTTON))
-            clear_btn.click()
-            time.sleep(2)
             clear_data = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_all_elements_located(UsersPageLocators.TABLE_DATA))
             clear_table_results = []
@@ -182,6 +187,6 @@ class UsersPage(BasePage):
                 clear_table_results.append(data.text)
         except selenium.common.StaleElementReferenceException:
             pass
-        assert default_table_results == clear_table_results, 'Clear button functionality failed'
-
+        assert ind_filter_results != default_table_results and default_table_results == clear_table_results,\
+            'Clear button functionality failed'
 
