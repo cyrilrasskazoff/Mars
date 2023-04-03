@@ -14,7 +14,7 @@ class LoginPage(BasePage):
         assert self.is_element_present(*LoginPageLocators.LOGIN_FORM), "Login form is not present"
 
     def login_admin_and_navigate_to_artists_page(self):
-        email = "testadmin1@test.com"
+        email = "selwebadmin@test.com"
         password = "Testtest1!"
         email_input = self.driver.find_element(*LoginPageLocators.EMAIL)
         password_input = self.driver.find_element(*LoginPageLocators.PASSWORD)

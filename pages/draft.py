@@ -174,7 +174,6 @@ def should_navigate_user_to_user_details_page(self):
         EC.presence_of_all_elements_located((*By.CLASS_NAME, 'MuiDataGrid-cell')))
     user = WebDriverWait(self.driver, 10).until(
         EC.element_to_be_clickable((*By.CLASS_NAME, 'MuiDataGrid-cell')))
-    print(len(data), user.text)
     # as it displays data for 1 user only
     user.click()
 driver.quit()

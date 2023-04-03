@@ -5,6 +5,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
+name ='Biom'
+email = 'biom@dispostable.com'
 
 
 class UsersPage(BasePage):
@@ -35,7 +37,6 @@ class UsersPage(BasePage):
             assert result.text == 'Entity' and result.text != 'Individual', "Entity Filter failed"
 
     def should_filter_by_email_work(self):
-        email = "biom@dispostable.com"
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(email)
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(Keys.RETURN)
         email_filter_results = WebDriverWait(self.driver, 10).until(
@@ -44,7 +45,6 @@ class UsersPage(BasePage):
             assert result.text == email, "Filter by Email failed"
 
     def should_filter_by_name_work(self):
-        name = "Biom"
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(name)
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(Keys.RETURN)
         name_filter_results = WebDriverWait(self.driver, 10).until(
@@ -53,7 +53,6 @@ class UsersPage(BasePage):
             assert name in result.text, "Filter by Name failed"
 
     def should_navigate_user_to_user_details_page(self):
-        email = "biom@dispostable.com"
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(email)
         self.driver.find_element(*UsersPageLocators.EMAIL_OR_NAME_FILTER_INPUT).send_keys(Keys.RETURN)
         # time.sleep(3)
@@ -69,7 +68,7 @@ class UsersPage(BasePage):
         # Note syntax difference when using WebDriverWait and EC (no '*'):
         # date_picker = self.driver.find_element(*UsersPageLocators.DATE_PICKER)
         # date_picker = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(UsersPageLocators.DATE_PICKER))
-        start_year = '2022' # picking hte start year = 2022 will automatically pick the start date = 09/01/2022
+        start_year = '2022'  # picking hte start year = 2022 will automatically pick the start date = 09/01/2022
         end_month = 'October'
         end_day = '31'
         date_picker = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(UsersPageLocators.DATE_PICKER))
@@ -110,10 +109,11 @@ class UsersPage(BasePage):
                    and date_filter_result.text[6:] == '2022', 'Filter by account creation date failed'
 
     def should_filter_by_active_inactive_work(self):
-        active_filter = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(UsersPageLocators.ACTIVE_FILTER))
+        active_filter = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(UsersPageLocators.ACTIVE_FILTER))
         active_filter.click()
         filter_results = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(UsersPageLocators.
-                                                                                                     TABLE_DATA))
+                                                                                                    TABLE_DATA))
         active_filter_results = []
         for result in filter_results:
             active_filter_results.append(result.text)
@@ -187,6 +187,5 @@ class UsersPage(BasePage):
                 clear_table_results.append(data.text)
         except selenium.common.StaleElementReferenceException:
             pass
-        assert ind_filter_results != default_table_results and default_table_results == clear_table_results,\
+        assert ind_filter_results != default_table_results and default_table_results == clear_table_results, \
             'Clear button functionality failed'
-
