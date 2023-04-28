@@ -12,4 +12,4 @@ class AdminUsersPage(BasePage):
                                                                                     "Users page"
 
     def should_be_admin_users_url(self):
-        assert "admin-users" in self.driver.current_url, "This is not an Admin Users page"
+        assert "/admin_users" in self.driver.current_url, "This is not an Admin Users page"

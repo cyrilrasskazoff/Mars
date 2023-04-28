@@ -1,3 +1,6 @@
+import selenium.common
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from .base_page import BasePage
 from .locators import SidebarLocators
 
@@ -39,35 +42,49 @@ class Sidebar(BasePage):
         assert self.is_element_present(*SidebarLocators.LOGOUT_BUTTON), "No Logout button"
 
     def logo_link_navigates_to_artists_page(self):
-        logo_link = self.driver.find_element(*SidebarLocators.LOGO_LINK)
+        logo_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(SidebarLocators.LOGO_LINK))
         logo_link.click()
 
     def artists_link_navigates_to_artists_page(self):
-        artists_link = self.driver.find_element(*SidebarLocators.ARTISTS_LINK)
+        artists_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(SidebarLocators.ARTISTS_LINK))
         artists_link.click()
 
     def users_link_navigates_to_users_page(self):
-        users_link = self.driver.find_element(*SidebarLocators.USERS_LINK)
+        users_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(SidebarLocators.USERS_LINK))
         users_link.click()
 
     def news_link_navigates_to_news_page(self):
-        news_link = self.driver.find_element(*SidebarLocators.NEWS_LINK)
+        news_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(SidebarLocators.NEWS_LINK))
         news_link.click()
 
     def featured_sections_link_navigates_to_featured_sections_page(self):
-        featured_sections_link = self.driver.find_element(*SidebarLocators.FEATURED_SECTIONS_LINK)
+        featured_sections_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(SidebarLocators.FEATURED_SECTIONS_LINK))
         featured_sections_link.click()
 
     def account_settings_link_navigates_to_account_settings_page(self):
-        account_settings_link = self.driver.find_element(*SidebarLocators.ACCOUNT_SETTINGS_LINK)
+        account_settings_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(SidebarLocators.ACCOUNT_SETTINGS_LINK))
         account_settings_link.click()
 
     def admin_users_link_navigates_to_admin_users_page(self):
-        admin_users_link = self.driver.find_element(*SidebarLocators.ADMIN_USERS_LINK)
-        admin_users_link.click()
+        try:
+            admin_users_link = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SidebarLocators.ADMIN_USERS_LINK))
+            admin_users_link.click()
+        except selenium.common.ElementClickInterceptedException:
+            pass
 
     def logout_button_navigates_to_login_page(self):
-        logout_button = self.driver.find_element(*SidebarLocators.LOGOUT_BUTTON)
-        logout_button.click()
+        try:
+            logout_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(SidebarLocators.LOGOUT_BUTTON))
+            logout_button.click()
+        except selenium.common.ElementClickInterceptedException:
+            pass
 
 

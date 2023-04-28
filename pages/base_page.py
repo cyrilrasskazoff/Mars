@@ -15,9 +15,16 @@ class BasePage:
     def open(self):
         self.driver.get(self.url)
 
+    # def is_element_present(self, method, element):
+    #     try:
+            # self.driver.find_element(method, element)
+        # except NoSuchElementException:
+        #     return False
+        # return True
     def is_element_present(self, method, element):
         try:
-            self.driver.find_element(method, element)
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((method, element)))
         except NoSuchElementException:
             return False
         return True
